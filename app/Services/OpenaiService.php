@@ -21,4 +21,21 @@ class OpenaiService
         $this->apiKey = config('services.openai.api_key');
         $this->orgId = config('services.openai.org_id');
     }
+
+    public function CreateCompletion(string $prompt)
+    {
+
+        $response = $this->performRequest('POST', '/v1/completions', [
+            "model" => 'text-davinci-003',
+            "prompt" =>  $prompt,
+            "max_tokens" => 1500,
+            "temperature" => 0.6,
+            "top_p" => 1,
+            "best_of" => 1,
+            "frequency_penalty" => 0,
+            "presence_penalty" => 0,
+        ]);
+
+        return json_decode((string) $response);
+    }
 }
